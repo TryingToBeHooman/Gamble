@@ -70,7 +70,7 @@ def joe_quote(quote, quotee, submitter):
     conn = sqlite3.connect('Joe.db')
     cur = conn.cursor()
 
-    pp = f"INSERT INTO QUOTES(QUOTE, QUOTEE, SUBMITTER) VALUES('{quote}','{quotee}', '{submitter}')"
+    pp = f'INSERT INTO QUOTES(QUOTE, QUOTEE, SUBMITTER) VALUES("{quote}","{quotee}", "{submitter}")'
 
     cur.execute(pp)
     conn.commit()
