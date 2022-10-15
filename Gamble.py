@@ -2,7 +2,8 @@ import discord, os, sqlite3, random, operator, time, Estrapy, requests, json, st
 from discord.ext import commands
 from discord.ui import Button, View
 from bs4 import BeautifulSoup
-os.system('cls')
+#os.system('cls') windows clear function
+#os.system('clear') linux clear function
 
 #if you dont know how to run this thing just dm me on discord TryingToBeHooman#6441
 
@@ -177,7 +178,7 @@ def monies_operation(user, amount, operator):
 
 @bot.event
 async def on_ready():
-    os.system('cls')
+    pass
 
 @bot.command(aliases=['Ping'])
 async def ping(ctx):
