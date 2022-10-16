@@ -4,6 +4,7 @@ from discord.ui import Button, View
 from discord.utils import find
 from bs4 import BeautifulSoup
 #os.system('cls')
+os.system('clear')
 
 bot = commands.Bot(command_prefix='%', case_sensitive=False,intents = discord.Intents.all())
 bot.remove_command('help')
@@ -234,7 +235,8 @@ def monies_operation(user, amount, operator):
 
 @bot.event
 async def on_ready():
-    #os.system('cls')
+    #os.system('cls') windows clear function
+    os.system('clear') #linux clear function just comment it out if you dont wanna use it
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'Gamble Is On {len(bot.guilds)} Servers!'))
 
 @bot.event
