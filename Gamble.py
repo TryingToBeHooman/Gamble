@@ -1,22 +1,46 @@
 import discord, os, sqlite3, random, operator, time, Estrapy, requests, json, string
 from discord.ext import commands
 from discord.ui import Button, View
+from discord.utils import find
 from bs4 import BeautifulSoup
-#os.system('cls') windows clear function
-#os.system('clear') linux clear function
+#os.system('cls')
 
-#if you dont know how to run this thing just dm me on discord TryingToBeHooman#6441
-
-bot = commands.Bot(command_prefix='%', intents = discord.Intents.all())
+bot = commands.Bot(command_prefix='%', case_sensitive=False,intents = discord.Intents.all())
+bot.remove_command('help')
 hot = 'https://cdn.discordapp.com/attachments/914279612568178689/1027654027644784691/unknown.png'
 random_things = ['moon knight', 'moon knight fanart',  'bob ross', 'hot lopunny', 'hot markiplier', 'random pokemon', 'pokemon', 'hot pokemon', 'goofy snapchat memes', 'pp', 'me irl', 'ivy x layten', 'hot femboy hooters', 'hot anime women in thigh highs', 'dank memes', 'isab x sauda', 'hot roblox', 'oh my hot roblox', '老干妈', 'funny twitter posts', 'sus minecraft', 'amongus minecraft', 'hot minecraft pics', 'hot belle delphine', 'belle delphine', 'hooters gone wrong', 'femboy hooters','heisenberg', 'heisenburger', 'isab', 'ludwig', 'cute cat', 'crazy rich asians', 'cute dog', 'hot anime girls', 'hot anime guys', 'hot genshin pics', 'amongus', 'fortnite', 'breaking bad', 'walter white', 'jesse pinkman', 'valorant', 'hot valorant pics', 'gay men kissing', 'hot valorant mommy', 'hot valorant men', 'hot valorant mommy', 'hot valorant daddy', 'handsome jschlatt', 'handsome jerma', 'smallant1', 'celeste fanart', 'hot bloons td6', 'hot league of legends', 'league of legends', 'terraria fanart', 'slime rancher fanart', 'amongus', 'fortnite', 'hot amongus', 'plants vs zombies fanart', 'my singing monsters fanart', 'hot fortnite', 'tf2 fanart', 'hot tf2', 'stumble guys', 'hot stumble guys', 'cuphead fanart', 'stardew valley fanart', 'hot stardew valley', 'tenz and kyedae', 'hot minecraft', 'minecraft fanart', 'hot spongebob', 'spongebob fanart', 'jschlatt gun', 'hot sans', 'femboy jimmyhere', 'hot jimmyhere', 'jimmyhere', 'moai', 'giga chad', 'penguinz0', 'hot penguinz0', 'xqc', 'hot xqc', 'waluigi', 'hot waluigi', 'big dumpy', 'hot viper mommy', 'hot sage mommy', 'hot brimstone daddy', 'frankie dumpy', 'clown', 'nerd emoji', 'TryingToBeHooman', 'csgo', 'amongus balls', 'stray', 'stray fanart', 'gta5', 'hot gta5', 'caramilk', 'hot dog', 'glizzy', 'hot glizzy', 'michael reeves', 'michael reeves x lilypichu', 'amouranth', 'pokimane', 'legend of zelda fanart', 'hot legend of zelda', 'mario', 'hot mario', 'splatoon', 'hot splatoon', 'splatoon fanart', 'cyberpunk 2077', 'hot cyberpunk 2077', 'hot ludwig', 'hot femboys', 'femboys', 'wawa cat']
 walter = ''
 jesse = ''
 deck = []
+roles = []
 quotes = []
 quotees = []
 submitters = []
-#https://discord.com/api/oauth2/authorize?client_id=1015464113280929802&permissions=8&scope=bot
+#https://discord.com/api/oauth2/authorize?client_id=1030540712665686087&permissions=8&scope=bot
+
+thingies = [':eggplant:', ':peach:', ':sweat_drops:', ':nerd:', ':clown:', ':moyai:']
+cool_money_get = 0
+
+def count_pp(thing, list):
+    return int(list.count(thing))
+
+def get_roll():
+    global rolls
+
+    if random.randint(0,100) < 10:
+        rolls.append(thingies[0])
+    elif random.randint(0,100) < 1:
+        rolls.append(thingies[5])
+    elif random.randint(0,100) < 5:
+        rolls.append(thingies[4])
+    elif random.randint(0,100) < 20:
+        rolls.append(thingies[1])
+    elif random.randint(0,100) < 20:
+        rolls.append(thingies[2])
+    elif random.randint(0,100) < 1:
+        rolls.append(thingies[3])
+    else:
+        pass
 
 def gen_screenshot():
     link = 'https://prnt.sc/'
@@ -31,6 +55,38 @@ def random_image():
 
     base_link = 'https://www.google.com/search?q={}&sxsrf=ALiCzsYzF5WB09ckxP22Bo7gG-cFfJ2R_Q:1665095701648&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj75sDu1Mz6AhXUIH0KHQUPAMAQ_AUoAnoECAIQBA&biw=1879&bih=931&dpr=1'
     pp = random.choice(random_things)
+    amongus = base_link.format(pp)
+    amongus_sus = []
+
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0'}
+    r = requests.get(amongus, headers=headers)
+    content = r.content
+    soup = BeautifulSoup(content, 'html.parser')
+    joe = True
+    i = 0
+
+    while joe == True:
+        try:
+            images = soup.findAll('img')[i]
+            src = images['src']
+            i += 1
+
+            if 'https://' in src:
+                amongus_sus.append(src)
+            else:
+                pass
+        except IndexError:
+            joe=False
+            break
+
+    walter = random.choice(amongus_sus)
+    jesse = pp
+
+def random_image_custom(phrase):
+    global walter, jesse, random_things
+
+    base_link = 'https://www.google.com/search?q={}&sxsrf=ALiCzsYzF5WB09ckxP22Bo7gG-cFfJ2R_Q:1665095701648&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj75sDu1Mz6AhXUIH0KHQUPAMAQ_AUoAnoECAIQBA&biw=1879&bih=931&dpr=1'
+    pp = phrase
     amongus = base_link.format(pp)
     amongus_sus = []
 
@@ -178,7 +234,228 @@ def monies_operation(user, amount, operator):
 
 @bot.event
 async def on_ready():
-    pass
+    #os.system('cls')
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'Gamble Is On {len(bot.guilds)} Servers!'))
+
+@bot.event
+async def on_guild_join(guild):
+    general = find(lambda x: x.name == 'general',  guild.text_channels)
+    if general and general.permissions_for(guild.me).send_messages:
+        join_embed = discord.Embed(title='Thank You For Adding Gamble', description='The prefix is %\nUse %commands to list all the commands. If you need help with any command, just use %help {command name}\n\nPlease, [share](https://discord.com/api/oauth2/authorize?client_id=1030540712665686087&permissions=8&scope=bot) the bot with all your friends.\nIf you have any issues or bugs, report them on my [github](https://github.com/tryingtobehooman/gamble/issues) for a cool reward.\nIf you really like the bot, please consider supporting me on [patreon](https://www.patreon.com/tryingtobehooman/posts). You can suggest ideas and see whats going on behind the scenes.\nEnjoy!', color=discord.Color.from_rgb(1, 168, 221))
+        await general.send(embed=join_embed)
+
+@bot.group(invoke_without_command=True, aliases=['Help'])
+async def help(ctx):
+    random_image()
+
+    help_embed = discord.Embed(title='Need Help?', description='Run %Commands To Get A List of Commands\nUse %Help {Command} To Get Help With That Command', color=discord.Color.from_rgb(1, 168, 221))
+    help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=help_embed)
+
+@help.command(aliases=['Commands'])
+async def commands(ctx):
+    random_image()
+
+    commands_help_embed = discord.Embed(title='Commands Command Syntax', description='Syntax: %Commands', color=discord.Color.from_rgb(1, 168, 221))
+    commands_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    commands_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=commands_help_embed)
+
+@help.command(aliases=['Ping'])
+async def ping(ctx):
+    random_image()
+
+    ping_help_embed = discord.Embed(title='Ping Command Syntax', description='Syntax: %Ping', color=discord.Color.from_rgb(1, 168, 221))
+    ping_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    ping_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=ping_help_embed)
+
+@help.command(aliases=['Test'])
+async def test(ctx):
+    random_image()
+
+    test_help_embed = discord.Embed(title='Test Command Syntax', description='Syntax: %Test', color=discord.Color.from_rgb(1, 168, 221))
+    test_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    test_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=test_help_embed)
+
+@help.command(aliases=['Bal'])
+async def bal(ctx):
+    random_image()
+
+    bal_help_embed = discord.Embed(title='Bal Command Syntax', description='Syntax: %Bal\nSyntax: %Bal Check {@Someone You Wanna Check}\nSyntax: %Bal Send {Amount} {@Someone You Wanna Give Money To}', color=discord.Color.from_rgb(1, 168, 221))
+    bal_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    bal_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=bal_help_embed)
+
+@help.command(aliases=['Coin'])
+async def coin(ctx):
+    random_image()
+
+    coin_help_embed = discord.Embed(title='Coin Command Syntax', description='Syntax: %Coin {Amount You Wanna Bet}', color=discord.Color.from_rgb(1, 168, 221))
+    coin_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    coin_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=coin_help_embed)
+
+@help.command(aliases=['Truth'])
+async def truth(ctx):
+    random_image()
+
+    truth_help_embed = discord.Embed(title='Truth Command Syntax', description='Syntax: %Truth', color=discord.Color.from_rgb(1, 168, 221))
+    truth_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    truth_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=truth_help_embed)
+
+@help.command(aliases=['Dare'])
+async def dare(ctx):
+    random_image()
+
+    dare_help_embed = discord.Embed(title='Dare Command Syntax', description='Syntax: %Dare', color=discord.Color.from_rgb(1, 168, 221))
+    dare_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    dare_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=dare_help_embed)
+
+@help.command(aliases=['Leaderboard'])
+async def leaderboard(ctx):
+    random_image()
+
+    leaderboard_help_embed = discord.Embed(title='Leaderboard Command Syntax', description='Syntax: %Leaderboard', color=discord.Color.from_rgb(1, 168, 221))
+    leaderboard_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    leaderboard_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=leaderboard_help_embed)
+
+@help.command(aliases=['Nft'])
+async def nft(ctx):
+    random_image()
+
+    nft_help_embed = discord.Embed(title='Nft Command Syntax', description='Syntax: %Nft', color=discord.Color.from_rgb(1, 168, 221))
+    nft_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    nft_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=nft_help_embed)
+
+@help.command(aliases=['Bored'])
+async def bored(ctx):
+    random_image()
+
+    bored_help_embed = discord.Embed(title='Bored Command Syntax', description='Syntax: %Bored', color=discord.Color.from_rgb(1, 168, 221))
+    bored_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    bored_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=bored_help_embed)
+
+@help.command(aliases=['Image'])
+async def image(ctx):
+    random_image()
+
+    image_help_embed = discord.Embed(title='Image Command Syntax', description='Syntax: %Image\nSyntax: %Image Get {Whatever You Want}', color=discord.Color.from_rgb(1, 168, 221))
+    image_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    image_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=image_help_embed)
+
+@help.command(aliases=['Slots'])
+async def slots(ctx):
+    random_image()
+
+    slots_help_embed = discord.Embed(title='Slots Command Syntax', description='Syntax: %Slots', color=discord.Color.from_rgb(1, 168, 221))
+    slots_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    slots_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=slots_help_embed)
+
+@help.command(aliases=['Blackjack', 'blackjack', 'Bj'])
+async def bj(ctx):
+    random_image()
+
+    bj_help_embed = discord.Embed(title='Bj Command Syntax', description='Syntax: %Bj', color=discord.Color.from_rgb(1, 168, 221))
+    bj_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    bj_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=bj_help_embed)
+
+@help.command(aliases=['Screenshot'])
+async def screenshot(ctx):
+    random_image()
+
+    screenshot_help_embed = discord.Embed(title='Screenshot Command Syntax', description='Syntax: %Screenshot', color=discord.Color.from_rgb(1, 168, 221))
+    screenshot_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    screenshot_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=screenshot_help_embed)
+
+@help.command(aliases=['Batman'])
+async def batman(ctx):
+    random_image()
+
+    batman_help_embed = discord.Embed(title='Batman Command Syntax', description='Syntax: %Batman', color=discord.Color.from_rgb(1, 168, 221))
+    batman_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    batman_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=batman_help_embed)
+
+@help.command(aliases=['Quote'])
+async def quote(ctx):
+    random_image()
+
+    quote_help_embed = discord.Embed(title='Quote Command Syntax', description='Syntax: %Quote\nSyntax: Quote Add {Quote} {Person Who Said It}', color=discord.Color.from_rgb(1, 168, 221))
+    quote_help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    quote_help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=quote_help_embed)
+
+'''@help.command(aliases=[''])
+async def (ctx):
+    random_image()
+
+    _help_embed = discord.Embed(title=' Command Syntax', description='Syntax: %', color=discord.Color.from_rgb(1, 168, 221))
+    _help_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    _help_embed.set_thumbnail(url=walter)
+    await ctx.reply(embed=_help_embed)'''
+
+@bot.command(aliases=['Commands'])
+async def commands(ctx):
+    def check(reaction, user):
+        return user == ctx.author
+
+    page1 = discord.Embed (
+        title = 'List Of Commands Page 1/4',
+        description = '%Help (Gives Help On A Command)\n%Commands (lists The Commands)\n%Ping (Pong)\n%Test (Test)\n%Bal (Check Your Balance)',
+        colour = discord.Color.from_rgb(1, 168, 221)
+    )
+    page2 = discord.Embed (
+        title = 'List Of Commands Page 2/4',
+        description = '%Bal Check (Check Balance Of Another Person)\n%Bal Send (Sends Money To Person)\n%Coin (Bet On A Coin Flip)\n%Truth (No Need To Explain)\n%Dare (Also No Need To Explain)',
+        colour = discord.Color.from_rgb(1, 168, 221)
+    )
+    page3 = discord.Embed (
+        title = 'List Of Commands Page 3/4',
+        description = '%Leaderboard (See Whos The Best)\n%Nft (Gives Random Bored Ape Nft)\n%Bored (Gives Random Activity To Do)\n%Image (Gives Random Image Based On A Phrase)\n%Slots (Slots Babee)',
+        colour = discord.Color.from_rgb(1, 168, 221)
+    )
+    page4 = discord.Embed (
+        title = 'List Of Commands Page 4/4',
+        description='%Screenshot (Gives Random Screenshot)\n%Bj (Succy Succy)\n%Batman (???)\n%Quote (Gives Random Quote)\n%Quote Add (Add A Quote)',
+        colour = discord.Color.from_rgb(1, 168, 221)
+    )
+
+    pages = [page1, page2, page3, page4]
+    
+    message = await ctx.send(embed=page1)
+    await message.add_reaction('◀')
+    await message.add_reaction('▶')
+
+    i = 0
+    reaction = None
+    while True:
+        if str(reaction) == '◀':
+            if i > 0:
+                i -= 1
+                await message.edit(embed=pages[i])
+        elif str(reaction) == '▶':
+            if i < 3:
+                i += 1
+                await message.edit(embed=pages[i])
+        try:
+            reaction, user = await bot.wait_for('reaction_add', timeout=60.0, check=check)
+            await message.remove_reaction(reaction, user)
+        except:
+            break
+
+    await message.clear_reactions()
 
 @bot.command(aliases=['Ping'])
 async def ping(ctx):
@@ -187,11 +464,11 @@ async def ping(ctx):
 @bot.command(aliases=['Test'])
 async def test(ctx):
     random_image()
-    test_button = Button(label='Test', style=discord.ButtonStyle.green, emoji='🍆')
+    test_button = Button(label='Test', style=discord.ButtonStyle.green, emoji=':eggplant:')
     test_view = View()
     test_view.add_item(test_button)
 
-    test_embed = discord.Embed(title='Test', description=f'Test', color=discord.Color.from_rgb(1, 168, 221))
+    test_embed = discord.Embed(title='Test', description=f'Test :eggplant::eggplant::eggplant:', color=discord.Color.from_rgb(1, 168, 221))
     test_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     test_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=test_embed, view=test_view)
@@ -206,7 +483,7 @@ async def bal(ctx):
     bal = get_monies(user)
 
     bal_embed = discord.Embed(title='Your Balance', description=f'Your Balance Is ${bal}', color=discord.Color.from_rgb(1, 168, 221))
-    bal_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    bal_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     bal_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=bal_embed)
 
@@ -224,7 +501,7 @@ async def check(ctx):
     bal = get_monies(user)
 
     bal_embed = discord.Embed(title='Their Balance', description=f'Their Balance Is ${bal}', color=discord.Color.from_rgb(1, 168, 221))
-    bal_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    bal_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     bal_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=bal_embed)
 
@@ -250,7 +527,7 @@ async def send(ctx):
     their_bal = get_monies(user)
 
     bal_embed = discord.Embed(title=f'You Sent {send_amount}', description=f'Their Balance Is Now ${their_bal}\nYour Balance Is Now ${your_bal}', color=discord.Color.from_rgb(1, 168, 221))
-    bal_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    bal_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     bal_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=bal_embed)
 
@@ -268,13 +545,13 @@ async def coin(ctx):
             if heads.lower() == random.choice(['heads', 'tails']) or user == 405461437520019456:
                 monies_operation(user, amount, '+')
                 win_embed = discord.Embed(title='Congragulations!', description=f'You Won ${amount}\nYour New Balance Is Now ${get_monies(user)}', color=discord.Color.from_rgb(1, 168, 221))
-                win_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+                win_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
                 win_embed.set_thumbnail(url=walter)
                 await ctx.reply(embed=win_embed)
             else:
                 monies_operation(user, amount, '-')
                 lose_embed = discord.Embed(title='Congragulations!', description=f'You Lost ${amount}\nYour New Balance Is Now ${get_monies(user)}', color=discord.Color.from_rgb(1, 168, 221))
-                lose_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+                lose_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
                 lose_embed.set_thumbnail(url=walter)
                 await ctx.reply(embed=lose_embed)
         else:
@@ -287,7 +564,7 @@ async def truth(ctx):
     random_image()
     truth = await Estrapy.AniGames.truth()
     truth_embed = discord.Embed(title='Truth', description=f'{truth}', color=discord.Color.from_rgb(1, 168, 221))
-    truth_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    truth_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     truth_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=truth_embed)
 
@@ -296,7 +573,7 @@ async def dare(ctx):
     random_image()
     dare = await Estrapy.AniGames.dare()
     dare_embed = discord.Embed(title='Dare', description=f'{dare}', color=discord.Color.from_rgb(1, 168, 221))
-    dare_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    dare_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     dare_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=dare_embed)
 
@@ -308,7 +585,7 @@ async def leaderboard(ctx):
     mama(user, str(name))
 
     leaderboard_embed = discord.Embed(title='Pp', description=f'Top 5 $:', color=discord.Color.from_rgb(1, 168, 221))
-    leaderboard_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    leaderboard_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     leaderboard_embed.set_thumbnail(url=walter)
 
     top = get_leaderboard()
@@ -332,15 +609,30 @@ async def nft(ctx):
     src = images['src']
 
     nft_embed = discord.Embed(title=f'Bored Ape #{pp}', color=discord.Color.from_rgb(1, 168, 221))
-    nft_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    nft_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     nft_embed.set_image(url=src)
     await ctx.reply(embed=nft_embed)
 
-@bot.command(aliases=['Image', 'im', 'Im'])
+@bot.group(invoke_without_command=True, aliases=['Image', 'im', 'Im'])
 async def image(ctx):
     random_image()
+
     image_embed = discord.Embed(title=f"You Got '{jesse.title()}'", color=discord.Color.from_rgb(1, 168, 221))
-    image_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    image_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
+    image_embed.set_image(url=walter)
+    await ctx.reply(embed=image_embed)
+
+@image.command(aliases=['Get'])
+async def get(ctx):
+    phrase = ctx.message.content
+    base = ctx.message.content.split(' ')
+    phrase = phrase.replace(base[0], '')
+    phrase = phrase.replace(base[1], '')
+    phrase = phrase.strip()
+    random_image_custom(phrase)
+
+    image_embed = discord.Embed(title=f"You Looked Up Images For '{jesse.title()}'", color=discord.Color.from_rgb(1, 168, 221))
+    image_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     image_embed.set_image(url=walter)
     await ctx.reply(embed=image_embed)
 
@@ -353,7 +645,7 @@ async def bored(ctx):
     activity_type = json_data['type']
 
     image_embed = discord.Embed(title=f'Your Activity', description=f'Your Activity: {activity}\nActivity Type: {(activity_type).title()}', color=discord.Color.from_rgb(1, 168, 221))
-    image_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    image_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     image_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=image_embed)
 
@@ -405,67 +697,48 @@ async def bj(ctx):
         await ctx.reply('You Have To Have At Least $100')
 
 @bot.command(aliases=['Slots'])
-@commands.has_permissions(ban_members=True)
-#async def slots(ctx, member:discord.Member, *, reason=None):
 async def slots(ctx):
+    global rolls
+
     random_image()
     user = ctx.author.id
     name = ctx.author
     mama(user, str(name))
 
-    #if reason == None:
-        #reason='🗿'
-
-    thingies = ['🍆', '🍑', '💦', '🤓', '🤡', '🗿']
+    thingies = [':eggplant:', ':peach:', ':sweat_drops:', ':nerd:', ':clown:', ':moyai:']
     rolls = []
+
+    cool_money_get = 0
 
     if int(get_monies(user)) >= 100:
         monies_operation(user, 100, '-')
 
-        for i in range(3):
-            if random.randint(0,100) < 10:
-                rolls.append(thingies[0])
-            elif random.randint(0,100) < 1:
-                rolls.append(thingies[5])
-            elif random.randint(0, 100) < 40:
-                rolls.append(thingies[4])
-            elif random.randint(0, 100) < 20:
-                rolls.append(thingies[1])
-            elif random.randint(0, 100) < 20:
-                rolls.append(thingies[2])
-            elif random.randint(0, 100) < 15:
-                rolls.append(thingies[3])
-            else:
-                rolls.append(random.choice(thingies))
-        
-        amongnus = ''
-        for i in range(len(rolls)):
-            amongnus += rolls[i]
-        
-        if amongnus == '🗿🗿🗿':
-            cool_money_get == 69420
-            message = '🗿'
-        elif amongnus == '🍆🍑💦':
+        rolls = []
+        while int(len(rolls)) != 3:
+            get_roll()
+
+        if count_pp(':moyai:', rolls) == 3 or count_pp(':nerd:', rolls) == 3:
             cool_money_get = 6969
-            message = 'Sus'
-        elif amongnus == '🤡🤡🤡' or '🤓🤓🤓':
-            cool_money_get = 69
-            message = 'Lmao Bozo'
-        elif amongnus == '🍆🍆🍆' or '🍑🍑🍑' or '💦💦💦':
-            cool_money_get = 1000
-            message = 'Pp'
+        elif count_pp(':clown:', rolls) == 3:
+            cool_money_get = 699
+        elif rolls == [':eggplant:', ':peach:', ':sweat_drops:'] or count_pp(':peach:', rolls) == 3 or count_pp(':eggplant:', rolls) == 3 or count_pp(':clown:', rolls) == 3:
+            cool_money_get = 6969
         else:
             cool_money_get = 0
 
+        amongnus = ''
+        for i in range(len(rolls)):
+            amongnus += rolls[i]
+
         monies_operation(user, cool_money_get, '+')
 
-        slots_embed = discord.Embed(title=f'Slots Big Pp', description=f'You Rolled: {amongnus}\nYou Got ${cool_money_get}\nYour Balance Is Now {get_monies(user)}\n{message}', color=discord.Color.from_rgb(1, 168, 221))
-        slots_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+        slots_embed = discord.Embed(title=f'Slots Big Pp', description=f'You Rolled: {amongnus}\nYou Got ${cool_money_get}\nYour Balance Is Now {get_monies(user)}', color=discord.Color.from_rgb(1, 168, 221))
+        slots_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
         slots_embed.set_thumbnail(url=walter)
         await ctx.reply(embed=slots_embed)
     else:
-        slots_embed = discord.Embed(title=f'Too Poor 🤣', description=f'Get Some Money', color=discord.Color.from_rgb(1, 168, 221))
-        slots_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+        slots_embed = discord.Embed(title=f'Too Poor :rolf:', description=f'Get Some Money', color=discord.Color.from_rgb(1, 168, 221))
+        slots_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
         slots_embed.set_thumbnail(url=walter)
         await ctx.reply(embed=slots_embed)
 
@@ -493,17 +766,17 @@ async def screenshot(ctx):
 async def batman(ctx):
     random_image()
     batman_embed = discord.Embed(title=f'Lego Batman (W)', description=f"Enjoy Your Movie (Totally Not Illegal But It's Funny)\nhttps://img.guildedcdn.com/ContentMediaGenericFiles/ec3d1f56be6b1b59c4446bbd9e789c23-Full.mp4?w=854&h=354", color=discord.Color.from_rgb(1, 168, 221))
-    batman_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    batman_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     batman_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=batman_embed)
 
-@bot.group(name='quote', invoke_without_command=True, aliases=['Quote'])
+@bot.group(invoke_without_command=True, aliases=['Quote'])
 async def quote(ctx):
     get_quote()
     random_image()
 
     quote_embed = discord.Embed(title=f'Random Quote', description=f"Quote: {joeee}\nSaid By: {joeeee}\nSubmitted By: {joeeeee}", color=discord.Color.from_rgb(1, 168, 221))
-    quote_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    quote_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     quote_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=quote_embed)
 
@@ -524,7 +797,7 @@ async def add(ctx):
     joe_quote(quote, quotee, submitter)
 
     quote_embed = discord.Embed(title=f'Submitted Quote', description=f"Quote: {quote}\nSaid By: {quotee}\nSubmitted By: {submitter}", color=discord.Color.from_rgb(1, 168, 221))
-    quote_embed.set_author(name='Executed By '+ctx.author.display_name, url=hot, icon_url=hot)
+    quote_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
     quote_embed.set_thumbnail(url=walter)
     await ctx.reply(embed=quote_embed)
 
