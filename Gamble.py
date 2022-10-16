@@ -739,7 +739,7 @@ async def slots(ctx):
         slots_embed.set_thumbnail(url=walter)
         await ctx.reply(embed=slots_embed)
     else:
-        slots_embed = discord.Embed(title=f'Too Poor :rolf:', description=f'Get Some Money', color=discord.Color.from_rgb(1, 168, 221))
+        slots_embed = discord.Embed(title=f'Too Poor :rofl:', description=f'Get Some Money', color=discord.Color.from_rgb(1, 168, 221))
         slots_embed.set_author(name='Executed By '+ ctx.author.display_name, url=hot, icon_url=hot)
         slots_embed.set_thumbnail(url=walter)
         await ctx.reply(embed=slots_embed)
