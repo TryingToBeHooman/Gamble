@@ -1,0 +1,4 @@
+discord
+os
+sqlite3
+bs4
