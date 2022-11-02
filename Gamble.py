@@ -1,3 +1,4 @@
+os.system('pip3 install Requirements.txt')
 import discord, os, sqlite3, random, operator, time, Estrapy, requests, json, string
 from discord.ext import commands
 from discord.ui import Button, View
